@@ -1,0 +1,29 @@
+#moe:menu
+
+MENU APPEND "Main"
+    "UNAM"			submenu "Main:UNAM"
+
+    MENU "Main:UNAM"
+    "Medicion"
+	MENU "Main:UNAM:Medicion"
+	    "Medicion1"		exec "run'dbvnew.svl'"
+	    "Medicion2"	exec "run'dbvnew.svl'"
+	    "Medicion3"		exec "run'dbvnew.svl'"
+	    "Medicion4"			exec "run'dbvnew.svl'"
+	ENDMENU
+    "Calculo"
+	MENU "Main:UNAM:Calculo"
+	    "Calculo1"		exec "run'dbvnew.svl'"
+	    "Calculo2"	exec "run'dbvnew.svl'"
+	    "Calculo3"		exec "run'dbvnew.svl'"
+	    "Calculo4"			exec "run'dbvnew.svl'"
+	ENDMENU  
+    "Operaciones"
+	MENU "Main:UNAM:Operaciones"
+	    "Operacion1"		exec "run'dbvnew.svl'"
+	    "Operacion2"	exec "run'dbvnew.svl'"
+	    "Operacion3"		exec "run'dbvnew.svl'"
+	    "Operacion4"			exec "run'dbvnew.svl'"
+	ENDMENU
+ENDMENU
+ENDMENU
