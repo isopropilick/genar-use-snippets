@@ -1,0 +1,74 @@
+// Le indicamos a MOE que tipo de funcion o archivo es el SVL
+#svl
+//Iniciamos la funcion main del programa
+global function main [DB];
+local n = 1;
+local a = 1;
+local x = 0;
+local c = 10;
+local Vm = [];
+//El primer IF para identificar el archivo cargado
+if DB === '' then
+  	write ['\nBase de datos no seleccionada.\n\n'];
+elseif ftype[DB] === '' then
+	write ['\nEl archivo no existe.\n\n'];
+//Si el archivo existe pasamos al siguiente IF
+elseif ftype[DB] === 'file' then
+//El segundo IF comprueba si el archivo seleccionado es una base de datos
+	if fext [DB] === 'mdb' then
+//		write ['\nInicia carga de Base de datos...\n\n'];
+//Iniciamos con la lectura de la base de datos
+		local mdb = db_Open [DB,'read']; 
+//Definimos cuantas entradas queremos cargar, en este caso 10
+		local entries = keep [db_Entries mdb, c];
+//Realizamos la lectura de las primeras 10 entradas de las columnas H y t y las almacenamos en vectores
+		local [v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11] = apt db_ReadFields [mdb,entries,[['V','P']]]; 
+//Cerramos la base de datos
+		db_Close mdb; 
+//Escribimos los vectores para su visualizacion
+		Vm = cat [Vm,v1];
+		Vm = cat [Vm,v2];
+		Vm = cat [Vm,v3];
+		Vm = cat [Vm,v4];
+		Vm = cat [Vm,v5];
+		Vm = cat [Vm,v6];
+		Vm = cat [Vm,v7];
+		Vm = cat [Vm,v8];
+		Vm = cat [Vm,v9];
+		Vm = cat [Vm,v10];
+//while a <= c loop
+//	for 2 loop
+//		append [Vm, get [v1, [1]]];
+//		append [Vm, get [v1, [2]]];
+//		append [Vm, get [v2, [1]]];
+//		append [Vm, get [v2, [2]]];
+//	endloop 
+//a = a + 1;
+//endloop
+while n <= c loop
+	//write ['Los valores V y P de la interaccion {f.0} son: {v.4}\n',n,v1];	
+x = x + 1;
+local pos = get [Vm, [x]];
+local pos1 = get [Vm, [x + 1]];
+write ['\nLos valores del vector {f.0} son {f} y {f}', n, pos, pos1];
+n = n + 1;
+x = x + 1;
+endloop
+//Iniciamos con el calculo del promedio
+		local Htot = 0;
+		local ttot = 0;
+		local Hprom = 0;
+		local tprom = 0;
+		Htot = [first v1] + [first v2] + [first v3] + [first v4] + [first v5] + [first v6] + [first v7] + [first v8] + [first v9] + [first v10];
+		ttot = [second v1] + [second v2] + [second v3] + [second v4] + [second v5] + [second v6] + [second v7] + [second v8] + [second v9] + [second v10];
+		Hprom = Htot / 10;
+		tprom = ttot / 10;
+//Imprimimos el promedio de los vectores
+		write ['\nEl promedio de los valores de V en las interacciones 1 a 10 es: {f.10}\n', Hprom];
+		write ['El promedio de los valores de P en las interacciones 1 a 10 es: {f.10}\n\n', tprom];
+//Concluimos el segundo IF si es que el archivo cargado no es una base de datos
+	else
+		write['\nEl archivo existe pero no es una base de datos\n\n'];
+	endif
+endif
+endfunction
